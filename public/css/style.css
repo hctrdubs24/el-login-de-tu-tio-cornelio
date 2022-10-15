@@ -1,0 +1,82 @@
+body {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  margin: auto;
+  text-align: center;
+}
+
+/* Login form */
+.login-form,
+.contenedor {
+  width: 300px;
+  margin: 0 auto;
+}
+.login-form h1 {
+  text-align: center;
+  color: midnightblue;
+  font-size: 28px;
+  padding: 70px 0 10px 0;
+}
+.login-form input[type="password"],
+.login-form input[type="text"] {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ced4da;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+/* Estilos boton LOGIN*/
+.btn-login {
+  width: 100%;
+  padding: 15px;
+  background-color: #6f42c1;
+  border: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: large;
+  color: #ffffff;
+}
+.btn-login:hover,
+.btn-login:active {
+  color: #fff;
+  background-color: #61428f;
+  border-color: #61428f;
+}
+/* Estilos de link para ir a LOGIN*/
+.a-login:link,
+.a-login:visited {
+  background-color: white;
+  color: black;
+  border: 2px solid #10b981;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.a-login:hover,
+.a-login:active {
+  background-color: #10b981;
+  color: white;
+}
+
+/* Estilos de link para realizar el LOGOUT*/
+.a-logout:link,
+.a-logout:visited {
+  background-color: white;
+  color: black;
+  border: 2px solid #f87171;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.a-logout:hover,
+.a-logout:active {
+  background-color: #f87171;
+  color: white;
+}
