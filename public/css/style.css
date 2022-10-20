@@ -1,22 +1,44 @@
 body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  background-color: #f5f5f5;
+  background-color: #fff;
+  /* background-color: #f5f5f5; */
   margin: auto;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Página inicial */
+.contenedor {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
 }
 
 /* Login form */
-.login-form,
-.contenedor {
+.login-form {
+  margin-top: 100px;
   width: 300px;
-  margin: 0 auto;
+  height: 250px;
+  background-color: #f5f5f5;
+  padding: 40px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  box-shadow: 12px 12px 8px -4px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 12px 12px 8px -4px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 12px 12px 8px -4px rgba(0, 0, 0, 0.4);
 }
+
 .login-form h1 {
   text-align: center;
   color: midnightblue;
   font-size: 28px;
-  padding: 70px 0 10px 0;
+  padding: 0 0 10px 0;
 }
 .login-form input[type="password"],
 .login-form input[type="text"] {
@@ -25,25 +47,35 @@ body {
   border: 1px solid #ced4da;
   margin-bottom: 10px;
   box-sizing: border-box;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
 
 /* Estilos boton LOGIN*/
 .btn-login {
   width: 100%;
   padding: 15px;
-  background-color: #6f42c1;
+  background-color: midnightblue;
   border: 0;
   box-sizing: border-box;
   cursor: pointer;
   font-weight: bold;
   font-size: large;
   color: #ffffff;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 .btn-login:hover,
 .btn-login:active {
   color: #fff;
-  background-color: #61428f;
-  border-color: #61428f;
+  background-color: rgb(32, 32, 143);
+  border-color: rgb(32, 32, 143);
 }
 /* Estilos de link para ir a LOGIN*/
 .a-login:link,
@@ -55,8 +87,12 @@ body {
   text-align: center;
   text-decoration: none;
   display: inline-block;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
-
 .a-login:hover,
 .a-login:active {
   background-color: #10b981;
@@ -74,9 +110,13 @@ body {
   text-decoration: none;
   display: inline-block;
 }
-
 .a-logout:hover,
 .a-logout:active {
   background-color: #f87171;
   color: white;
+}
+
+form i {
+  margin-left: -25px;
+  cursor: pointer;
 }

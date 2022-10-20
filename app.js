@@ -69,23 +69,23 @@ const updateState = async (user) => {
 // autenticación
 app.post("/auth", async (req, res) => {
   const user = req.body.user,
-    pass = req.body.pass;
-  if (user && pass) {
+    password = req.body.pass;
+  if (user && password) {
     connection.query(
       "SELECT CvUser, CvPerso, NomUser, Contrasena, DATE_FORMAT(FechaIni,'%Y-%m-%d') as fechainicio, DATE_FORMAT(FechaFin,'%Y-%m-%d') as fechafin, EdoCta FROM musuario WHERE NomUser = ?",
       [user],
-      async (error, results) => {
-        let today = new Date(),
-          dd = String(today.getDate()).padStart(2, "0"),
-          mm = String(today.getMonth() + 1).padStart(2, "0"),
-          yyyy = today.getFullYear();
-        today = `${yyyy}-${mm}-${dd}`;
-
-        let todayCom = new Date(today),
-          fechafinCom = new Date(results[0].fechafin),
-          fechainiCom = new Date(results[0].fechainicio);
-
-        if (fechainiCom <= todayCom && fechafinCom >= todayCom) {
+      async (err, results) => {
+        if (results.length == 0) {
+          res.render("login", {
+            alert: true,
+            alertTitle: "Error",
+            alertMessage: "El usuario no existe",
+            alertIcon: "Error",
+            showConfirmButton: true,
+            timer: false,
+            ruta: "login",
+          });
+        } else {
           if (results[0].EdoCta === 0) {
             res.render("login", {
               alert: true,
@@ -97,58 +97,69 @@ app.post("/auth", async (req, res) => {
               ruta: "login",
             });
           } else {
-            if (results.length == 0 || pass != results[0].Contrasena) {
+            let today = new Date(),
+              dd = String(today.getDate()).padStart(2, "0"),
+              mm = String(today.getMonth() + 1).padStart(2, "0"),
+              yyyy = today.getFullYear();
+            today = `${yyyy}-${mm}-${dd}`;
+
+            let todayCom = new Date(today),
+              fechafinCom = new Date(results[0].fechafin),
+              fechainiCom = new Date(results[0].fechainicio);
+
+            if (fechainiCom <= todayCom && fechafinCom >= todayCom) {
+              if (password != results[0].Contrasena) {
+                res.render("login", {
+                  alert: true,
+                  alertTitle: "Error",
+                  alertMessage: "Contraseña incorrecta",
+                  alertIcon: "Error",
+                  showConfirmButton: true,
+                  timer: false,
+                  ruta: "login",
+                });
+              } else {
+                req.session.loggedin = true;
+                req.session.name = results[0].NomUser;
+                res.render("login", {
+                  alert: true,
+                  alertTitle: "Conexión exitosa",
+                  alertMessage: "Login correcto",
+                  alertIcon: "Success",
+                  showConfirmButton: false,
+                  timer: 1500,
+                  ruta: "",
+                });
+              }
+            } else if (fechafinCom <= todayCom) {
+              updateState(user);
               res.render("login", {
                 alert: true,
                 alertTitle: "Error",
-                alertMessage: "Usuario o contraseña incorrectas",
+                alertMessage:
+                  "La cuenta ya alcanzó el límite de tiempo de actividad",
                 alertIcon: "Error",
                 showConfirmButton: true,
                 timer: false,
                 ruta: "login",
               });
-            } else {
-              req.session.loggedin = true;
-              req.session.name = results[0].NomUser;
+            } else if (fechainiCom >= todayCom) {
               res.render("login", {
                 alert: true,
-                alertTitle: "Conexión exitosa",
-                alertMessage: "Login correcto",
-                alertIcon: "Success",
-                showConfirmButton: false,
-                timer: 1500,
-                ruta: "",
+                alertTitle: "Error",
+                alertMessage:
+                  "La cuenta aún no está activada, contacte al administrador",
+                alertIcon: "Error",
+                showConfirmButton: true,
+                timer: false,
+                ruta: "login",
               });
             }
           }
-        } else if (fechafinCom <= todayCom) {
-          updateState(user);
-          res.render("login", {
-            alert: true,
-            alertTitle: "Error",
-            alertMessage:
-              "La cuenta ya alcanzó el límite de tiempo de actividad",
-            alertIcon: "Error",
-            showConfirmButton: true,
-            timer: false,
-            ruta: "login",
-          });
         }
-
-        //// aqui termina
       }
     );
-  } else {
-    res.render("login", {
-      alert: true,
-      alertTitle: "Advertencia",
-      alertMessage: "Ingrese un usuario o contraseña",
-      alertIcon: "warning",
-      showConfirmButton: true,
-      timer: 1500,
-      ruta: "login",
-    });
-  } //// termina x2
+  }
 });
 
 app.listen(3000, (req, res) => {
