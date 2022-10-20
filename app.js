@@ -7,8 +7,6 @@ const express = require("express"),
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Uso de dotenv para variables de entorno
-
 // Uso del directorio public
 app.use("/resources", express.static("public"));
 app.use("/resources", express.static(__dirname + "/public"));
@@ -27,7 +25,7 @@ app.use(
 
 // Establecer rutas
 
-// Autenticación
+// 1 - Autenticación de sesión
 app.get("/", (req, res) => {
   if (req.session.loggedin) {
     res.render("index", {
@@ -42,7 +40,7 @@ app.get("/", (req, res) => {
   }
 });
 
-// Logout
+// 2 - Logout
 app.get("/logout", (req, res) => {
   req.session.destroy(() => {
     res.redirect("/login");
@@ -53,7 +51,7 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-// actualizar estado de la cuenta
+// Actualizar estado de la cuenta
 const updateState = async (user) => {
   connection.query(
     "UPDATE musuario SET EdoCta = '0' WHERE NomUser = ?",
@@ -64,7 +62,7 @@ const updateState = async (user) => {
   );
 };
 
-// autenticación
+// 3 - Autenticación de cuenta
 app.post("/auth", async (req, res) => {
   const user = req.body.user,
     password = req.body.pass;
@@ -160,6 +158,7 @@ app.post("/auth", async (req, res) => {
   }
 });
 
+// Servidor
 app.listen(3000, (req, res) => {
   console.log("El servidor está corriendo en http://localhost:3000");
 });
