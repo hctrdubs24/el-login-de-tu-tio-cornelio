@@ -1,6 +1,5 @@
 const express = require("express"),
   app = express(),
-  dotenv = require("dotenv"),
   session = require("express-session"),
   connection = require("./database/db.js");
 
@@ -9,7 +8,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Uso de dotenv para variables de entorno
-dotenv.config({ path: "./env/env" });
 
 // Uso del directorio public
 app.use("/resources", express.static("public"));
